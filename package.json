@@ -2,6 +2,10 @@
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "server": "node server.js"
+  },
   "license": "MIT",
   "dependencies": {
     "socket.io": "^4.8.1"
