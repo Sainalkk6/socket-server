@@ -17,13 +17,21 @@ io.on("connection", (socket) => {
         socket.join(roomId);
     });
 
-    socket.on("typing", () =>{
-        socket.broadcast.emit("user typing", true)
-    })
+    socket.on("typing", () => {
+        socket.broadcast.emit("user typing", true);
+    });
 
-    socket.on("stop_typing", ()=> {
-        socket.broadcast.emit("user typing", false)
-    })
+    socket.on("stop_typing", () => {
+        socket.broadcast.emit("user typing", false);
+    });
+
+    socket.on("online", () => {
+        socket.broadcast.emit("user status", true);
+    });
+
+    socket.on("offline", () => {
+        socket.broadcast.emit("user status", false);
+    });
 
     socket.on("send_message", (data) => {
         console.log("sending message has been initialised");
