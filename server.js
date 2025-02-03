@@ -17,6 +17,14 @@ io.on("connection", (socket) => {
         socket.join(roomId);
     });
 
+    socket.on("typing", () =>{
+        socket.broadcast.emit("user typing", true)
+    })
+
+    socket.on("stop_typing", ()=> {
+        socket.broadcast.emit("user typing", false)
+    })
+
     socket.on("send_message", (data) => {
         console.log("sending message has been initialised");
         io.in(data.roomId).emit('receive_msg', data);
