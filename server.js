@@ -27,16 +27,6 @@ io.on("connection", (socket) => {
         socket.broadcast.emit("user typing", false);
     });
 
-    socket.on("user joined", (userId) => {
-        users.set(userId);
-        io.emit("update users", Array.from(users.values));
-    });
-
-    socket.on("user left", (userId) => {
-        users.delete(userId);
-        io.emit("update users", Array.from(users.values));
-    });
-
     socket.on("send_message", (data) => {
         console.log("sending message has been initialised");
         io.in(data.roomId).emit('receive_msg', data);
