@@ -10,6 +10,8 @@ const io = new Server(httpServer, {
     }
 });
 
+const users = new Map();
+
 io.on("connection", (socket) => {
     console.log("connected");
     socket.on('join_room', (roomId) => {
@@ -25,12 +27,14 @@ io.on("connection", (socket) => {
         socket.broadcast.emit("user typing", false);
     });
 
-    socket.on("online", () => {
-        socket.broadcast.emit("user status", true);
+    socket.on("user joined", (userId) => {
+        users.set(userId);
+        io.emit("update users", Array.from(users.values));
     });
 
-    socket.on("offline", () => {
-        socket.broadcast.emit("user status", false);
+    socket.on("user left", (userId) => {
+        users.delete(userId);
+        io.emit("update users", Array.from(users.values));
     });
 
     socket.on("send_message", (data) => {
